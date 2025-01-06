@@ -1,143 +1,47 @@
-// Sélection des éléments HTML
+import { renderTasks, addTask, toggleTaskCompletion, enableTaskEditing, deleteTask } from "./tasks.js";
+import { createDarkModeButton, toggleDarkMode } from "./darkMode.js";
 
-let taskInput = document.getElementById("taskInput")
-let addTaskButton = document.getElementById("addTaskButton")
-let inProgressTasks = document.getElementById("inProgressTasks")
-let completedTasks = document.getElementById("completedTasks")
-let deletedTasks = document.getElementById("deletedTasks")
+// Sélection des éléments
 
-// Chargement initial des tâches depuis le Local Storage
+let taskInput = document.getElementById("taskInput");
+let addTaskButton = document.getElementById("addTaskButton");
+let filterButtons = document.querySelectorAll(".filter-button");
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || []
+// Ajouter le bouton de mode sombre
 
-// Fonction pour afficher les tâches
+let darkModeButton = createDarkModeButton();
+darkModeButton.addEventListener("click", () => toggleDarkMode(darkModeButton));
+document.body.appendChild(darkModeButton);
 
-function renderTasks() {
+// Ajouter une tâche
 
-  // Réinitialise les listes
+addTaskButton.addEventListener("click", () => {
 
-  inProgressTasks.innerHTML = ""
-  completedTasks.innerHTML = ""
-  deletedTasks.innerHTML = ""
+  let taskText = taskInput.value.trim();
+  if (!taskText) return;
+  addTask(taskText);
+  taskInput.value = ""; // Réinitialiser le champ
 
-  // Parcours des tâches
+});
 
-  tasks.forEach((task, index) => {
+// Gestion des filtres
 
-    let li = document.createElement("li")
+filterButtons.forEach((button) => {
 
-    li.className = "list-group-item d-flex justify-content-between align-items-center shadow-sm"
-    li.innerHTML = `
+  button.addEventListener("click", () => {
 
-      <span ${task.completed ? 'class="text-decoration-line-through text-muted"' : ""}>${task.text}</span>
-      <div>
+    filterButtons.forEach((btn) => btn.classList.remove("active"));
+    button.classList.add("active");
+    let filter = button.getAttribute("data-filter");
+    renderTasks(filter);
 
-        ${!task.deleted
+  });
 
-          ? `
-            <button class="btn btn-sm btn-success me-2" onclick="toggleComplete(${index})">
+});
 
-              ${task.completed ? "Annuler" : "Terminer"}
-
-            </button>
-
-            <button class="btn btn-sm btn-danger" onclick="deleteTask(${index})">Supprimer</button>
-          `
-          : `
-            <button class="btn btn-sm btn-danger" onclick="permanentlyDeleteTask(${index})">Supprimer définitivement</button>
-          `}
-
-      </div>
-
-    `
-
-    if (task.deleted) {
-
-      deletedTasks.appendChild(li)
-
-    } else if (task.completed) {
-
-      completedTasks.appendChild(li)
-
-    } else {
-
-      inProgressTasks.appendChild(li)
-
-    }
-
-  })
-
-  // Mise à jour du Local Storage
-
-  localStorage.setItem("tasks", JSON.stringify(tasks))
-
-}
-
-// Fonction pour ajouter une tâche
-
-function addTask() {
-
-  let taskText = taskInput.value.trim()
-
-  if (taskText === "") {
-
-    alert("Veuillez entrer une tâche !")
-
-    return
-
-  }
-
-  // Ajout d'une nouvelle tâche
-
-  tasks.push({ text: taskText, completed: false, deleted: false })
-
-  taskInput.value = "" // Réinitialiser le champ
-
-  renderTasks() // Rafraîchir l'affichage
-
-}
-
-// Fonction pour marquer une tâche comme terminée / en cours
-
-function toggleComplete(index) {
-
-  tasks[index].completed = !tasks[index].completed
-
-  renderTasks()
-
-}
-
-// Fonction pour supprimer une tâche
-
-function deleteTask(index) {
-
-  tasks[index].deleted = true
-
-  renderTasks()
-
-}
-
-// Fonction pour supprimer définitivement une tâche
-
-function permanentlyDeleteTask(index) {
-
-  tasks.splice(index, 1) // Supprime l'élément du tableau
-
-  renderTasks()
-
-}
-
-// Événement sur le bouton "Ajouter"
-
-addTaskButton.addEventListener("click", addTask)
-
-// Rendre les fonctions accessibles globalement
-
-window.toggleComplete = toggleComplete
-window.deleteTask = deleteTask
-window.permanentlyDeleteTask = permanentlyDeleteTask
-
-// Initialisation de l'affichage
+// Initialisation
 
 renderTasks()
-  
+toggleTaskCompletion()
+enableTaskEditing()
+deleteTask()

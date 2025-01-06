@@ -1,25 +1,13 @@
-export function loadTasks() {
+export function saveTasksToStorage(tasks) {
 
-    return JSON.parse(localStorage.getItem("tasks")) || []
-
-}
-
-export function saveTask(tasks) {
-
-    localStorage.setItem("tasks", JSON.stringify(tasks))
+  localStorage.setItem("tasks", JSON.stringify(tasks))
 
 }
 
-export function toggleTask(id, tasks, newStatus) {
+export function loadTasksFromStorage() {
 
-    let task = tasks.find((task) => task.id === id)
+  let savedTasks = localStorage.getItem("tasks")
 
-    if (task) {
-
-        task.status = newStatus
-
-        saveTask(tasks)
-
-    }
+  return savedTasks ? JSON.parse(savedTasks) : []
 
 }
