@@ -39,6 +39,17 @@ filterButtons.forEach((button) => {
 
 })
 
+document.getElementById("taskInput").addEventListener("keypress", function(event) {
+
+  if (event.key === "Enter") {
+
+      document.getElementById("addTaskButton").click()
+
+  }
+  
+})
+
+
 // Initialisation
 
 renderTasks()
