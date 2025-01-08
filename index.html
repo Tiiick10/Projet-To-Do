@@ -12,52 +12,66 @@
 
 <body>
 
-    <div class="divImg">
-        <img src="./public/img/todolist.jpeg" alt="">
-    </div>
-
     <div class="container my-5">
 
-        <div class="d-flex mb-4">
-            <input id="taskInput" type="text" class="form-control me-2 w-50 mx-auto" placeholder="Ajouter une tâche">
-            <button id="addTaskButton" class="btn btn-primary">Ajouter</button>
+        <!-- Image -->
+         
+        <div class="row">
+            <div class="col-12">
+                <img src="./public/img/todolist.jpeg" alt="To-Do List" class="img-fluid rounded shadow mt-4">
+            </div>
         </div>
 
-        <div class="filters mb-4 text-center">
-            <button data-filter="all" class="btn btn-outline-primary mx-2 filter-button active">Toutes</button>
-            <button data-filter="in-progress" class="btn btn-outline-primary mx-2 filter-button">En cours</button>
-            <button data-filter="completed" class="btn btn-outline-primary mx-2 filter-button">Terminées</button>
-        </div>
-        <ul id="taskList" class="list-group mt-5"></ul>
+        <!-- Contenu principal -->
 
+        <div class="row mt-4">
+
+            <!-- Calculatrice -->
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div id="calculator" class="calculator shadow-sm">
+                    <input type="text" id="calcDisplay" class="calculator-display form-control mb-3" readonly>
+                    <div class="calculator-buttons">
+                        <button class="btn btn-secondary">7</button>
+                        <button class="btn btn-secondary">8</button>
+                        <button class="btn btn-secondary">9</button>
+                        <button class="btn btn-warning" data-operator="/">÷</button>
+                        <button class="btn btn-secondary">4</button>
+                        <button class="btn btn-secondary">5</button>
+                        <button class="btn btn-secondary">6</button>
+                        <button class="btn btn-warning" data-operator="*">×</button>
+                        <button class="btn btn-secondary">1</button>
+                        <button class="btn btn-secondary">2</button>
+                        <button class="btn btn-secondary">3</button>
+                        <button class="btn btn-warning" data-operator="-">−</button>
+                        <button class="btn btn-secondary">0</button>
+                        <button class="btn btn-secondary">.</button>
+                        <button class="btn btn-danger" data-action="clear">C</button>
+                        <button class="btn btn-warning" data-operator="+">+</button>
+                        <button class="btn btn-warning" data-operator="%">%</button>
+                        <button class="btn btn-success" data-action="equals">=</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- To-Do List -->
+
+            <div class="col-lg-8 col-md-6">
+                <div class="task-input-container d-flex align-items-center mb-3">
+                    <input type="text" id="taskInput" class="form-control me-2" placeholder="Ajouter une tâche">
+                    <button id="addTaskButton" class="btn btn-primary">Ajouter</button>
+                </div>                
+                
+                <div class="filters mb-4 text-center">
+                    <button data-filter="all" class="btn btn-outline-primary filter-button active">Toutes</button>
+                    <button data-filter="in-progress" class="btn btn-outline-primary filter-button">En cours</button>
+                    <button data-filter="completed" class="btn btn-outline-primary filter-button">Terminées</button>
+                </div>                
+
+                <ul id="taskList" class="list-group"></ul>
+            </div>
+        </div>
     </div>
-
-    <div id="calculator" class="calculator ms-4">
-
-        <input type="text" id="calcDisplay" class="calculator-display form-control mb-2" readonly>
-    
-        <div class="calculator-buttons">
-            <button class="btn btn-secondary">7</button>
-            <button class="btn btn-secondary">8</button>
-            <button class="btn btn-secondary">9</button>
-            <button class="btn btn-warning" data-operator="/">÷</button>
-            <button class="btn btn-secondary">4</button>
-            <button class="btn btn-secondary">5</button>
-            <button class="btn btn-secondary">6</button>
-            <button class="btn btn-warning" data-operator="*">×</button>
-            <button class="btn btn-secondary">1</button>
-            <button class="btn btn-secondary">2</button>
-            <button class="btn btn-secondary">3</button>
-            <button class="btn btn-warning" data-operator="-">−</button>
-            <button class="btn btn-secondary">0</button>
-            <button class="btn btn-secondary">.</button>
-            <button class="btn btn-danger" data-action="clear">C</button>
-            <button class="btn btn-warning" data-operator="+">+</button>
-            <button class="btn btn-warning" data-operator="%">%</button>
-            <button class="btn btn-success" data-action="equals">=</button>
-        </div>
-    
-    </div>    
 
     <script type="module" src="./public/js/main.js"></script>
 

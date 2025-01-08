@@ -39,6 +39,8 @@ filterButtons.forEach((button) => {
 
 })
 
+// Ajouter une tâche avec "Entrée"
+
 document.getElementById("taskInput").addEventListener("keypress", function(event) {
 
   if (event.key === "Enter") {
@@ -48,6 +50,8 @@ document.getElementById("taskInput").addEventListener("keypress", function(event
   }
   
 })
+
+// Calculatrice
 
 let calcDisplay = document.getElementById("calcDisplay")
 
@@ -75,7 +79,7 @@ calculator.addEventListener("click", (e) => {
 
     if (!action && !operatorValue) {
 
-        if (currentInput.length < 10) { // Limite la longueur de l'affichage
+        if (currentInput.length < 20) { // Limite la longueur de l'affichage
 
             currentInput += buttonText
 
@@ -101,7 +105,7 @@ calculator.addEventListener("click", (e) => {
 
     }
 
-    // Si c'est "C" (clear)
+    // Si c'est "C"
 
     if (action === "clear") {
 
@@ -109,7 +113,7 @@ calculator.addEventListener("click", (e) => {
 
     }
 
-    // Si c'est "=" (equals)
+    // Si c'est "="
 
     if (action === "equals") {
 
@@ -139,11 +143,10 @@ function updateDisplay(value) {
 
 function resetCalculator(result = "") {
 
-    currentInput = result ? result.toString() : ""
-
-    previousValue = null
-
-    operator = null
+    currentInput = "" // Reset de l'input actuel
+    previousValue = null // Reset la valeur précédente
+    operator = null // Reset de l'opérateur
+    updateDisplay(result) // MaJ affichage
 
 }
 
