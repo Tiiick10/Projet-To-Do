@@ -49,6 +49,137 @@ document.getElementById("taskInput").addEventListener("keypress", function(event
   
 })
 
+let calcDisplay = document.getElementById("calcDisplay")
+
+let calculator = document.getElementById("calculator")
+
+let currentInput = ""
+
+let operator = null
+
+let previousValue = null
+
+// Gestion des clics sur les boutons
+
+calculator.addEventListener("click", (e) => {
+
+    let target = e.target
+
+    let action = target.dataset.action
+
+    let operatorValue = target.dataset.operator
+
+    let buttonText = target.textContent
+
+    // Si c'est un chiffre ou un point
+
+    if (!action && !operatorValue) {
+
+        if (currentInput.length < 10) { // Limite la longueur de l'affichage
+
+            currentInput += buttonText
+
+            updateDisplay(currentInput)
+
+        }
+
+    }
+
+    // Si c'est une opération
+
+    if (operatorValue) {
+
+        if (currentInput) {
+
+            previousValue = parseFloat(currentInput)
+
+            operator = operatorValue
+
+            currentInput = ""
+
+        }
+
+    }
+
+    // Si c'est "C" (clear)
+
+    if (action === "clear") {
+
+        resetCalculator()
+
+    }
+
+    // Si c'est "=" (equals)
+
+    if (action === "equals") {
+
+        if (operator && previousValue !== null && currentInput) {
+
+            let result = calculate(previousValue, parseFloat(currentInput), operator)
+
+            updateDisplay(result)
+
+            resetCalculator(result) // Réinitialise pour continuer les calculs
+
+        }
+
+    }
+
+})
+
+// Met à jour l'affichage
+
+function updateDisplay(value) {
+
+    calcDisplay.value = value
+
+}
+
+// Reset la calculatrice
+
+function resetCalculator(result = "") {
+
+    currentInput = result ? result.toString() : ""
+
+    previousValue = null
+
+    operator = null
+
+}
+
+// Calculs
+
+function calculate(value1, value2, operator) {
+
+    switch (operator) {
+
+        case "+":
+
+            return value1 + value2
+
+        case "-":
+
+            return value1 - value2
+
+        case "*":
+
+            return value1 * value2
+
+        case "/":
+
+            return value2 !== 0 ? value1 / value2 : "Erreur"
+
+        case "%":
+
+            return value1 % value2
+
+        default:
+
+            return value2
+
+    }
+
+}
 
 // Initialisation
 

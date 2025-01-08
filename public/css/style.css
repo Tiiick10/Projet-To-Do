@@ -98,3 +98,32 @@ button:hover {
   text-decoration: line-through;
   background-color: lightgreen; 
 }
+
+.container {
+  gap: 20px; 
+}
+
+.calculator {
+  width: 300px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calculator-display {
+  font-size: 1.5rem;
+  text-align: right;
+}
+
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.calculator-buttons .btn {
+  font-size: 1.2rem;
+  height: 50px;
+}
