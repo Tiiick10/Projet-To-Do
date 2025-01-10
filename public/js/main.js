@@ -51,6 +51,79 @@ document.getElementById("taskInput").addEventListener("keypress", function(event
   
 })
 
+// Validation des chiffres avec le clavier numérique (chiffres, opérateur, backspace pour effacer)
+
+document.addEventListener("keydown", (e) => {
+
+    let key = e.key // Récupère la touche pressée
+
+    if (!isNaN(key)) { 
+
+        // Si c'est un chiffre
+
+        if (previousValue !== null && !operator && currentInput === "") {
+
+            // Si un nouveau chiffre est tapé après un calcul, réinitialiser
+            
+            previousValue = null
+        }
+
+        if (currentInput.length < 20) { // Limite la longueur de l'affichage
+            currentInput += key
+            updateDisplay(currentInput)
+        }
+
+    } else if (["+", "-", "*", "/", "%"].includes(key)) {
+
+        // Si c'est un opérateur
+
+        if (currentInput) {
+
+            previousValue = parseFloat(currentInput)
+            operator = key
+            currentInput = ""
+
+        } else if (previousValue !== null) {
+
+            // Permet de changer l'opérateur si aucun nouveau chiffre n'a été entré
+
+            operator = key
+
+        }
+
+    } else if (key === "Enter" || key === "=") {
+
+        // Si c'est "Enter" ou "=" pour calculer le résultat
+
+        if (operator && previousValue !== null && currentInput) {
+
+            let result = calculate(previousValue, parseFloat(currentInput), operator)
+
+            updateDisplay(result)
+
+            resetCalculator(result) // Reset mais garde le résultat comme base pour le calcul suivant
+
+        }
+
+    } else if (key === "Backspace" || key.toLowerCase() === "c") {
+
+        // Si c'est "Backspace" ou "C" pour réinitialiser
+
+        resetCalculator()
+
+        updateDisplay("")
+
+    } else if (key === ".") {
+
+        // Si c'est un point décimal
+
+        if (!currentInput.includes(".")) {
+            currentInput += "."
+            updateDisplay(currentInput)
+        }
+    }
+})
+
 // Calculatrice
 
 let calcDisplay = document.getElementById("calcDisplay")
@@ -143,9 +216,9 @@ function updateDisplay(value) {
 
 function resetCalculator(result = "") {
 
-    currentInput = "" // Reset de l'input actuel
-    previousValue = null // Reset la valeur précédente
-    operator = null // Reset de l'opérateur
+    currentInput = ""
+    previousValue = result !== "" ? parseFloat(result) : null // Conserve le résultat comme valeur précédente
+    operator = null // Reset l'opérateur
     updateDisplay(result) // MaJ affichage
 
 }
